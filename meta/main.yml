@@ -1,0 +1,15 @@
+galaxy_info:
+  role_name: gvnnn.editor
+  author: gvnnn
+  description: Installs and configure Neovim
+  company: ~
+  license: license (MIT)
+  min_ansible_version: 2.9
+  platforms:
+  - name: Fedora
+    versions:
+      - 35
+
+  galaxy_tags:
+    - editor
+    - neovim

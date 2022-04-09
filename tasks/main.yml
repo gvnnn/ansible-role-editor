@@ -1,0 +1,26 @@
+---
+- name: Ensure Neovim is installed
+  ansible.builtin.package:
+    name: neovim
+    state: present
+
+- name: Ensure config directory is present
+  become: no
+  ansible.builtin.file:
+    path: "{{ lookup('env', 'HOME') }}/.config/nvim"
+    state: directory
+
+- name: Copy init file
+  become: no
+  ansible.builtin.template:
+    src: "{{ editor_init_template }}"
+    dest: "{{ lookup('env', 'HOME') }}/.config/nvim/init.vim"
+
+- name: Install editor plugins
+  become: no
+  ansible.builtin.git:
+    repo: "{{ item.repo }}"
+    dest: "{{ item.dest }}"
+    version: "{{ item.version | default(omit) }}"
+  loop: "{{ editor_plugins }}"
+  when: editor_plugins is defined
